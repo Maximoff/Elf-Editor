@@ -180,7 +180,7 @@ public class MainActivity extends Activity
 			catch (UnknownFormatConversionException | IOException e)
 			{
 				e.printStackTrace();
-				return "failed";
+				return getString(R.string.failure);
 			}
 			return getString(R.string.success);
 		}
@@ -287,7 +287,7 @@ public class MainActivity extends Activity
 				showMessage(MainActivity.this, result).show();
 				return;
 			}
-			st("Success!");
+			st(getString(R.string.success));
 			finish();
 		}
 
@@ -423,7 +423,7 @@ public class MainActivity extends Activity
 					ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
 					// 将文本内容放到系统剪贴板里。
 					cm.setText(txtOriginalView.getText());
-					st("Copyed!");
+					st(getString(R.string.copied));
 					return true;
 				}
 			};
@@ -621,7 +621,14 @@ public class MainActivity extends Activity
 		mAdapter = new stringListAdapter(this);
 		// 为列表控件设置数据适配器
 		stringListView.setAdapter(mAdapter);
-		checkPerm(this, new String[]{"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"});
+		if (Build.VERSION.SDK_INT >= 23) 
+		{
+			checkPerm(this, new String[]{"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"});
+		}
+		else
+		{
+			this.OpenSystemFile();
+		}
 	}
 
 	@Override
@@ -636,7 +643,7 @@ public class MainActivity extends Activity
                 }
 				else if (!shouldShowRequestPermissionRationale(permissions[0]))
 				{
-					st("Without access to the storage, the application will not be able to work!");
+					st(getString(R.string.permission_alert));
 					goToSettings();
 					this.finish();
 				}
@@ -711,12 +718,12 @@ public class MainActivity extends Activity
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		try
 		{
-			startActivityForResult(Intent.createChooser(intent, "Please select a file!"), 0x111);
+			startActivityForResult(Intent.createChooser(intent, getString(R.string.select_file)), 0x111);
 		}
 		catch (android.content.ActivityNotFoundException ex)
 		{
 			// Potentially direct the user to the Market with a Dialog
-			st("Please install the file manager");
+			st(getString(R.string.install_fm));
 		}
 	}
 
@@ -752,7 +759,7 @@ public class MainActivity extends Activity
 					}
 					else
 					{
-						showMessage(MainActivity.this, "Error rename file: " + fileSrc).show();
+						showMessage(MainActivity.this, getString(R.string.err_rename, fileSrc)).show();
 					}
 				}
 			}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

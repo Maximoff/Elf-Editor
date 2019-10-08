@@ -252,7 +252,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		String mResult = mWriter.toString();
 		mStringBuffer.append(mResult);
 		// 保存文件，设置文件名
-		String mFileName = "CrashLog.log";
+		String mFileName = "ElfEditor_CrashLog.log";
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			try {
 				String mDirectory = Environment.getExternalStorageDirectory().getPath();

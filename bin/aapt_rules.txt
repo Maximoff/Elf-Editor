@@ -1,0 +1,6 @@
+# view AndroidManifest.xml #generated:11
+-keep class zhao.elf.editor.CatchError.CrashApplication { <init>(...); }
+
+# view AndroidManifest.xml #generated:16
+-keep class zhao.elf.editor.MainActivity { <init>(...); }
+
